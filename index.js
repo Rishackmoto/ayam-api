@@ -40,7 +40,7 @@ app.use('/jenistarif', jenisTarifRoutes);
 app.use('/jenissupplier', jenisSupplierRoutes);
 app.use('/jenispengguna', jenisPenggunaRoutes);
 
-const PORT = process.env.PORT || 1433;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
