@@ -23,6 +23,10 @@ const jenisPenggunaRoutes = require('./routes/jenispengguna');
 const app = express();
 app.use(cors());
 app.use(express.json());
+// Tambahkan route test di sini
+app.get('/', (req, res) => {
+  res.send('API Running');
+});
 
 app.use('/api', authRoutes);
 app.use('/jenisayam', jenisAyamRoutes);
