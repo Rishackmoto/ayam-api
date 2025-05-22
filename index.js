@@ -31,10 +31,7 @@ const jenisPenggunaRoutes = require('./routes/jenispengguna');
 const app = express();
 app.use(cors());
 app.use(express.json());
-// // Tambahkan route test di sini
-// app.get('/', (req, res) => {
-//   res.send('API Running');
-// });
+
 
 app.use('/api', authRoutes);
 app.use('/jenisayam', jenisAyamRoutes);
@@ -52,7 +49,7 @@ app.use('/jenistarif', jenisTarifRoutes);
 app.use('/jenissupplier', jenisSupplierRoutes);
 app.use('/jenispengguna', jenisPenggunaRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
