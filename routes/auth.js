@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { sql, poolPromise } = require('../db');
 
-router.post('/api/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const { userid, pass } = req.body;
 
