@@ -39,11 +39,8 @@ app.use('/jenissatuan', jenisSatuanRoutes);
 app.use('/jenistarif', jenisTarifRoutes);
 app.use('/jenissupplier', jenisSupplierRoutes);
 app.use('/jenispengguna', jenisPenggunaRoutes);
-app.get("/", (req, res) => {
-  res.send("🐔 AYAM API is running di Railway!");
-});
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 1433;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
