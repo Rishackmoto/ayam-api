@@ -3,7 +3,7 @@ const router = express.Router();
 const { sql, poolPromise } = require('../db'); // sesuaikan dengan file koneksi kamu 
 
 // GET semua jenis tarif
-router.post('/', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const pool = await poolPromise;
     const { jns, tgl } = req.body;
