@@ -6,34 +6,40 @@ const { sql, poolPromise } = require('../db'); // sesuaikan dengan file koneksi 
 router.get('/', async (req, res) => {
   try {
     const pool = await poolPromise;
-    const result = await pool.request().query(`
-     SELECT  
-  -- Telur Besar
-  ISNULL((SELECT SUM(besar) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
-  ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '11'), 0) AS sisa_besar,
 
-  -- Telur Sedang
-  ISNULL((SELECT SUM(sedang) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
-  ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '12'), 0) AS sisa_sedang,
+    const stokResult = await pool.request().query(`
+      SELECT  
+        ISNULL((SELECT SUM(besar) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
+        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '11'), 0) AS sisa_besar,
+        ISNULL((SELECT SUM(sedang) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
+        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '12'), 0) AS sisa_sedang,
+        ISNULL((SELECT SUM(kecil) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
+        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '13'), 0) AS sisa_kecil,
+        ISNULL((SELECT SUM(retak) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
+        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '14'), 0) AS sisa_retak,
+        ISNULL((SELECT SUM(sekali) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
+        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '15'), 0) AS sisa_sekali
+    `);
 
-  -- Telur Kecil
-  ISNULL((SELECT SUM(kecil) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
-  ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '13'), 0) AS sisa_kecil,
+     const hasiljualtelur = await pool.request().query(`
+      SELECT jns, SUM(jmlh) AS total_jual
+      FROM transaksi_jual
+      WHERE flag = 'JTL' AND tgl <= GETDATE()
+      GROUP BY jns
 
-  -- Telur Retak
-  ISNULL((SELECT SUM(retak) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
-  ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '14'), 0) AS sisa_retak,
+    `);
+  
 
-  -- Telur Sekali
-  ISNULL((SELECT SUM(sekali) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
-  ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '15'), 0) AS sisa_sekali
+    res.json({
+      stok_telur: stokResult.recordset[0],
+      hasiljualtelur: hasiljualtelur.recordset
+    });
 
-        `);
-    res.json(result.recordset);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 
 module.exports = router;
