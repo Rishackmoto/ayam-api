@@ -7,14 +7,27 @@ router.get('/', async (req, res) => {
   try {
     const pool = await poolPromise;
     const result = await pool.request().query(`
-        SELECT 
-        SUM(besar) AS besar,
-        SUM(sedang) AS sedang,
-        SUM(kecil) AS kecil,
-        SUM(retak) AS retak,
-        SUM(sekali) AS sekali
-        FROM transaksi_telur
-        WHERE tgl <= GETDATE()
+     SELECT  
+  -- Telur Besar
+  ISNULL((SELECT SUM(besar) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
+  ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '11'), 0) AS sisa_besar,
+
+  -- Telur Sedang
+  ISNULL((SELECT SUM(sedang) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
+  ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '12'), 0) AS sisa_sedang,
+
+  -- Telur Kecil
+  ISNULL((SELECT SUM(kecil) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
+  ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '13'), 0) AS sisa_kecil,
+
+  -- Telur Retak
+  ISNULL((SELECT SUM(retak) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
+  ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '14'), 0) AS sisa_retak,
+
+  -- Telur Sekali
+  ISNULL((SELECT SUM(sekali) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
+  ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '15'), 0) AS sisa_sekali
+
         `);
     res.json(result.recordset);
   } catch (err) {
