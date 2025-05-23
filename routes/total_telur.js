@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { sql, poolPromise } = require('../db');
 
-router.post('/', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const pool = await poolPromise;
     const { jns, tgl } = req.body;
