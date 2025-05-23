@@ -1,11 +1,12 @@
 // routes/report.js (atau sesuai strukturmu)
 const express = require('express');
 const router = express.Router();
-const db = require('../db'); // koneksi SQL Server
+const { sql, poolPromise } = require('../db');
 
 router.get('/', async (req, res) => {
   try {
-    const result = await db.query(`
+     const pool = await poolPromise;
+    const result = await pool.request().query(`
       SELECT 
         SUM(besar) AS besar,
         SUM(sedang) AS sedang,
