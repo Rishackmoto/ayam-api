@@ -28,6 +28,8 @@ const jenisTarifRoutes = require('./routes/jenistarif');
 const jenisSupplierRoutes = require('./routes/jenissupplier'); 
 const jenisPenggunaRoutes = require('./routes/jenispengguna'); 
 
+const totalstoktelur = require('./routes/total_telur'); 
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -48,6 +50,10 @@ app.use('/jenissatuan', jenisSatuanRoutes);
 app.use('/jenistarif', jenisTarifRoutes);
 app.use('/jenissupplier', jenisSupplierRoutes);
 app.use('/jenispengguna', jenisPenggunaRoutes);
+
+app.use('/total_telur', totalstoktelur);
+
+
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
