@@ -4,7 +4,7 @@ const { sql, poolPromise } = require('../db'); // sesuaikan dengan file koneksi 
 
 // GET semua total telur
 router.get('/', async (req, res) => {
-  try {
+  try {  
     const pool = await poolPromise;
 
     const stokResult = await pool.request().query(`
@@ -20,15 +20,18 @@ router.get('/', async (req, res) => {
         ISNULL((SELECT SUM(sekali) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
         ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '15'), 0) AS sisa_sekali
     `);
-
-     const hasiljualtelur = await pool.request().query(`
+    
+    const hasiljualtelur = await pool.request()
+    .input('jns', sql.VarChar, jns)
+    .input('tgl', sql.DateTime, tgl)
+    .query(`
       SELECT jns, SUM(jmlh) AS total_jual
       FROM transaksi_jual
-      WHERE flag = 'JTL' AND tgl <= GETDATE()
+      WHERE (@jns IS NULL OR jns = @jns)
+        AND flag = 'JTL'
+        AND tgl <= @tgl
       GROUP BY jns
-
-    `);
-  
+  `);
 
     res.json({
       stok_telur: stokResult.recordset[0],
