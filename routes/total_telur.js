@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db'); // koneksi SQL Server
 
-router.get('/total-telur', async (req, res) => {
+router.get('/total_telur', async (req, res) => {
   try {
     const result = await db.query(`
       SELECT 
