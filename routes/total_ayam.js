@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
 
     const stokAyamResult = await pool.request().query(`
       SELECT  
-       ISNULL((SELECT SUM(afkir) FROM transaksi_ayam_end WHERE tgl <= GETDATE()), 0) -
+        ISNULL((SELECT SUM(afkir) FROM transaksi_ayam_end WHERE tgl <= GETDATE()), 0) -
         ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JAY' AND jns2 = '11'), 0) AS sisa_afkir,
         ISNULL((SELECT SUM(sakit) FROM transaksi_ayam_end WHERE tgl <= GETDATE()), 0) -
         ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JAY' AND jns2 = '12'), 0) AS sisa_sakit,
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
         SELECT jns2, SUM(jmlh) AS total_jual
         FROM transaksi_jual
         WHERE flag = 'JAY' 
-        AND (@jns IS NULL OR jns = @jns)
+        AND (@jns IS NULL OR jns2 = @jns)
         AND tgl <= @tgl
         GROUP BY jns2
       `);
