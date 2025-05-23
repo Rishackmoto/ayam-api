@@ -29,6 +29,7 @@ const jenisSupplierRoutes = require('./routes/jenissupplier');
 const jenisPenggunaRoutes = require('./routes/jenispengguna'); 
 
 const totalstoktelur = require('./routes/total_telur'); 
+const totalstokayam = require('./routes/total_ayam'); 
 
 const app = express();
 app.use(cors());
@@ -52,7 +53,7 @@ app.use('/jenissupplier', jenisSupplierRoutes);
 app.use('/jenispengguna', jenisPenggunaRoutes);
 
 app.use('/total_telur', totalstoktelur);
-
+app.use('/total_ayam', totalstokayam);
 
 
 const PORT = process.env.PORT;
