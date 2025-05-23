@@ -51,7 +51,7 @@ app.use('/jenistarif', jenisTarifRoutes);
 app.use('/jenissupplier', jenisSupplierRoutes);
 app.use('/jenispengguna', jenisPenggunaRoutes);
 
-app.use('api/total_telur', totalstoktelur);
+app.use('/total_telur', totalstoktelur);
 
 
 

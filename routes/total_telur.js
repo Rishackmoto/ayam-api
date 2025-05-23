@@ -1,10 +1,8 @@
-// routes/report.js (atau sesuai strukturmu)
 const express = require('express');
 const router = express.Router();
-const { sql, poolPromise } = require('../db');
+const { sql, poolPromise } = require('../db'); // sesuaikan dengan file koneksi kamu
 
-
-// GET semua jenis ayam
+// GET semua total telur
 router.get('/', async (req, res) => {
   try {
     const pool = await poolPromise;
@@ -15,12 +13,14 @@ router.get('/', async (req, res) => {
         SUM(kecil) AS kecil,
         SUM(retak) AS retak,
         SUM(sekali) AS sekali
-      FROM transaksi_telur
-      WHERE tgl <= GETDATE()
-    `);
+        FROM transaksi_telur
+        WHERE tgl <= GETDATE()
+        `);
     res.json(result.recordset);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
+
 module.exports = router;
