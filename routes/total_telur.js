@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { sql, poolPromise } = require('../db'); // sesuaikan dengan file koneksi kamu
+const { sql, poolPromise } = require('../db');
 
-// GET semua total telur
-router.get('/', async (req, res) => {
-  try {  
+router.post('/', async (req, res) => {
+  try {
     const pool = await poolPromise;
+    const { jns, tgl } = req.body;
 
     const stokResult = await pool.request().query(`
       SELECT  
@@ -20,18 +20,18 @@ router.get('/', async (req, res) => {
         ISNULL((SELECT SUM(sekali) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
         ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '15'), 0) AS sisa_sekali
     `);
-    
+
     const hasiljualtelur = await pool.request()
-    .input('jns', sql.VarChar, jns)
-    .input('tgl', sql.DateTime, tgl)
-    .query(`
-      SELECT jns, SUM(jmlh) AS total_jual
-      FROM transaksi_jual
-      WHERE (@jns IS NULL OR jns = @jns)
-        AND flag = 'JTL'
+      .input('jns', sql.VarChar, jns)
+      .input('tgl', sql.DateTime, tgl)
+      .query(`
+        SELECT jns, SUM(jmlh) AS total_jual
+        FROM transaksi_jual
+        WHERE flag = 'JTL' 
+        AND (@jns IS NULL OR jns = @jns)
         AND tgl <= @tgl
-      GROUP BY jns
-  `);
+        GROUP BY jns
+      `);
 
     res.json({
       stok_telur: stokResult.recordset[0],
@@ -42,7 +42,5 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-
 
 module.exports = router;
