@@ -32,9 +32,20 @@ router.post('/', async (req, res) => {
         GROUP BY jns2
       `);
 
+    const pembelianayam = await pool.request()
+      .input('tgl', sql.DateTime, tgl)
+      .query(`
+        SELECT jns, SUM(jmlh) AS total_jual
+        FROM transaksi
+        WHERE flag = 'PAY' 
+        AND tgl <= @tgl
+        GROUP BY jns2
+      `); 
+
     res.json({
       stokAyamResult: stokAyamResult.recordset[0],
-      hasiljualayam: hasiljualayam.recordset
+      hasiljualayam: hasiljualayam.recordset,
+      pembelianayam: pembelianayam.recordset
     });
 
   } catch (err) {
