@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
+require("dotenv").config()
 const { poolPromise } = require("./db");
 
 // Cek environment variable (taruh di sini sebelum listen)
@@ -32,30 +32,15 @@ const totalstoktelur = require('./routes/total_telur');
 const totalstokayam = require('./routes/total_ayam'); 
 
 const app = express();
-
-const allowedOrigins = [
-  "https://sit-loor-pskm2qex3-rishackmotos-projects.vercel.app",
-  "https://ayam-api.up.railway.app", // optional
-  "http://localhost:3000", // optional for dev
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  origin: [
+    "https://ayam-api.up.railway.app",
+    "https://sit-loor-naog89oej-rishackmotos-projects.vercel.app"
+  ],
+  credentials: true
 }));
-
-// ** Tambahkan ini untuk handle preflight OPTIONS request **
-app.options('*', cors());
-
 app.use(express.json());
+
 
 app.use('/api', authRoutes);
 app.use('/jenisayam', jenisAyamRoutes);
@@ -76,7 +61,9 @@ app.use('/jenispengguna', jenisPenggunaRoutes);
 app.use('/total_telur', totalstoktelur);
 app.use('/total_ayam', totalstokayam);
 
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+
