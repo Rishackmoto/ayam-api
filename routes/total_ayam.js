@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
     const pembelianayam = await pool.request()
       .input('tgl', sql.DateTime, tgl)
       .query(`
-        SELECT jenisayam.jenis, SUM(jmlh) AS total_beli
+        SELECT jenisayam.jenis as jns, SUM(jmlh) AS total_beli
         FROM transaksi,jenisayam
         WHERE transaksi.jns = jenisayam.kode and flag = 'PAY'  
         AND tgl <= @tgl
