@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
     const pool = await poolPromise;
     const { jns, tgl } = req.body;
 
-    const stokResult = await pool.request().query()
+    const stokResult = await pool.request()
       .input('tgl', sql.DateTime, tgl)
       .require(`
       SELECT  

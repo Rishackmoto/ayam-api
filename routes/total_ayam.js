@@ -3,13 +3,13 @@ const router = express.Router();
 const { sql, poolPromise } = require('../db'); // sesuaikan dengan file koneksi kamu 
 const { query } = require('mssql');
 
-// GET semua jenis tarif
+// GET semua jenis ayam
 router.post('/', async (req, res) => {
   try {
     const pool = await poolPromise;
     const { jns, tgl } = req.body;
 
-    const stokAyamResult = await pool.request().query()
+    const stokAyamResult = await pool.request()
       .input('tgl', sql.DateTime, tgl)
       .query(`
       SELECT  
@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
         SELECT jns2, SUM(jmlh) AS total_jual
         FROM transaksi_jual
         WHERE flag = 'JAY' 
-        AND (@jns IS NULL OR jns2 = @jns)
+        AND (@jns IS NULL OR @jns = '' OR jns2 = @jns)
         AND tgl <= @tgl
         GROUP BY jns2
       `);
