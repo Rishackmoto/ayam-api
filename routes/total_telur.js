@@ -40,11 +40,11 @@ router.post('/', async (req, res) => {
       .input('tgl', sql.DateTime, tgl)
       .query(`
       SELECT  
-        ISNULL((SELECT SUM(besar) FROM transaksi_telur WHERE tgl <= @tgl), 0) AS AMBILBESAR,
-        ISNULL((SELECT SUM(sedang) FROM transaksi_telur WHERE tgl <= @tgl), 0) AS AMBILSEDANG,
-        ISNULL((SELECT SUM(kecil) FROM transaksi_telur WHERE tgl <= @tgl), 0) AS AMBILKECIL,
-        ISNULL((SELECT SUM(retak) FROM transaksi_telur WHERE tgl <= @tgl), 0) AS AMBILRETAK,
-        ISNULL((SELECT SUM(sekali) FROM transaksi_telur WHERE tgl <= @tgl), 0) AS AMBILSEKALI
+        ISNULL((SELECT SUM(besar) FROM transaksi_telur WHERE tgl <= @tgl), 0) AS ambilbesar,
+        ISNULL((SELECT SUM(sedang) FROM transaksi_telur WHERE tgl <= @tgl), 0) AS ambilsedang,
+        ISNULL((SELECT SUM(kecil) FROM transaksi_telur WHERE tgl <= @tgl), 0) AS ambilkecil,
+        ISNULL((SELECT SUM(retak) FROM transaksi_telur WHERE tgl <= @tgl), 0) AS ambilretak,
+        ISNULL((SELECT SUM(sekali) FROM transaksi_telur WHERE tgl <= @tgl), 0) AS ambilsekali
     `);
 
     res.json({
