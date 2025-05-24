@@ -8,18 +8,20 @@ router.post('/', async (req, res) => {
     const pool = await poolPromise;
     const { jns, tgl } = req.body;
 
-    const stokResult = await pool.request().query(`
+    const stokResult = await pool.request().query()
+      .input('tgl', sql.DateTime, tgl)
+      .require(`
       SELECT  
-        ISNULL((SELECT SUM(besar) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
-        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '11'), 0) AS sisa_besar,
-        ISNULL((SELECT SUM(sedang) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
-        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '12'), 0) AS sisa_sedang,
-        ISNULL((SELECT SUM(kecil) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
-        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '13'), 0) AS sisa_kecil,
-        ISNULL((SELECT SUM(retak) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
-        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '14'), 0) AS sisa_retak,
-        ISNULL((SELECT SUM(sekali) FROM transaksi_telur WHERE tgl <= GETDATE()), 0) -
-        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '15'), 0) AS sisa_sekali
+        ISNULL((SELECT SUM(besar) FROM transaksi_telur WHERE tgl <= @tgl), 0) -
+        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '11' and tgl <= @tgl), 0) AS sisa_besar,
+        ISNULL((SELECT SUM(sedang) FROM transaksi_telur WHERE tgl <= @tgl), 0) -
+        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '12' and tgl <= @tgl), 0) AS sisa_sedang,
+        ISNULL((SELECT SUM(kecil) FROM transaksi_telur WHERE tgl <= @tgl), 0) -
+        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '13' and tgl <= @tgl), 0) AS sisa_kecil,
+        ISNULL((SELECT SUM(retak) FROM transaksi_telur WHERE tgl <= @tgl), 0) -
+        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '14' and tgl <= @tgl), 0) AS sisa_retak,
+        ISNULL((SELECT SUM(sekali) FROM transaksi_telur WHERE tgl <= @tgl), 0) -
+        ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '15' and tgl <= @tgl), 0) AS sisa_sekali
     `);
 
     const hasiljualtelur = await pool.request()
