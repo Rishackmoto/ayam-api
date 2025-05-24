@@ -33,12 +33,21 @@ const totalstokayam = require('./routes/total_ayam');
 
 const app = express();
 app.use(cors({
-  origin: [
-    "https://ayam-api.up.railway.app",
-    "https://sit-loor-naog89oej-rishackmotos-projects.vercel.app"
-  ],
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      "https://sit-loor-pskm2qex3-rishackmotos-projects.vercel.app",
+      "https://ayam-api.up.railway.app", // optional
+      "http://localhost:3000", // optional for dev
+    ];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
+
 app.use(express.json());
 
 
