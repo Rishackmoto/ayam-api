@@ -50,7 +50,7 @@ router.post('/', async (req, res) => {
     res.json({
       stok_telur: stokResult.recordset[0],
       hasiljualtelur: hasiljualtelur.recordset,  
-      ambiltelur: ambiltelur.recordset
+      ambiltelur: ambiltelur.recordset[0]
     });
 
   } catch (err) {
