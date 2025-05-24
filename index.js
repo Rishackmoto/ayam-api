@@ -34,8 +34,9 @@ const totalstokayam = require('./routes/total_ayam');
 const app = express();
 app.use(cors({
   origin: [
-    "https://ayam-api-ruby.vercel.app",
+    "https://sit-loor-naog89oej-rishackmotos-projects.vercel.app",
   ],
+  credentials: true
 }));
 app.use(express.json());
 
