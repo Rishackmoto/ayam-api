@@ -34,7 +34,8 @@ const totalstokayam = require('./routes/total_ayam');
 const app = express();
 app.use(cors({
   origin: [
-    "https://sit-loor-naog89oej-rishackmotos-projects.vercel.app",
+    "https://ayam-api.up.railway.app",
+    "https://sit-loor-naog89oej-rishackmotos-projects.vercel.app"
   ],
   credentials: true
 }));
