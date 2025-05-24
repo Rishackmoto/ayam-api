@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
         FROM transaksi
         WHERE flag = 'PAY' 
         AND tgl <= @tgl
-        GROUP BY jns2
+        GROUP BY jns
       `); 
 
     res.json({
