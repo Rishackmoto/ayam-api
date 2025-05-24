@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
 
     const stokResult = await pool.request()
       .input('tgl', sql.DateTime, tgl)
-      .require(`
+      .query(`
       SELECT  
         ISNULL((SELECT SUM(besar) FROM transaksi_telur WHERE tgl <= @tgl), 0) -
         ISNULL((SELECT SUM(jmlh) FROM transaksi_jual WHERE flag = 'JTL' AND jns = '11' and tgl <= @tgl), 0) AS sisa_besar,
