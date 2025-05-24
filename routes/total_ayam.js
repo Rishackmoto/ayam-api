@@ -35,11 +35,11 @@ router.post('/', async (req, res) => {
     const pembelianayam = await pool.request()
       .input('tgl', sql.DateTime, tgl)
       .query(`
-        SELECT jns, SUM(jmlh) AS totalbeliayam
-        FROM transaksi
-        WHERE flag = 'PAY' 
+        SELECT jenisayam.jenis, SUM(jmlh) AS total_beli
+        FROM transaksi,jenisayam
+        WHERE transaksi.jns = jenisayam.kode and flag = 'PAY'  
         AND tgl <= @tgl
-        GROUP BY jns
+        GROUP BY jenisayam.jenis
       `); 
 
     res.json({
