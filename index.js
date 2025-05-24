@@ -34,7 +34,7 @@ const totalstokayam = require('./routes/total_ayam');
 const app = express();
 app.use(cors({
   origin: [
-    "https://ayam-api-ruby.vercel.app/", // ganti dengan URL web kamu
+    "https://ayam-api-ruby.vercel.app",
   ],
 }));
 app.use(express.json());
@@ -60,7 +60,7 @@ app.use('/total_telur', totalstoktelur);
 app.use('/total_ayam', totalstokayam);
 
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
