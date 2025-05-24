@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { sql, poolPromise } = require('../db'); // sesuaikan dengan file koneksi kamu 
-const { query } = require('mssql');
 
 // GET semua jenis ayam
 router.post('/', async (req, res) => {
