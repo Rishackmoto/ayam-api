@@ -35,7 +35,8 @@ const app = express();
 app.use(cors({
   origin: [
     "https://ayam-api.up.railway.app",
-    "https://api.rishackmoto.com"
+    "https://api.rishackmoto.com",
+    "https://ayam-api-nine.vercel.app"
   ],
   credentials: true
 }));
