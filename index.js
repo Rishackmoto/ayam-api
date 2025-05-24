@@ -32,7 +32,11 @@ const totalstoktelur = require('./routes/total_telur');
 const totalstokayam = require('./routes/total_ayam'); 
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://ayam-api-ruby.vercel.app/", // ganti dengan URL web kamu
+  ],
+}));
 app.use(express.json());
 
 
