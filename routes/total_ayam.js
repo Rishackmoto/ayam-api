@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
       .input('jns', sql.VarChar, jns)
       .input('tgl', sql.DateTime, tgl)
       .query(`
-        SELECT jns2, SUM(jmlh) AS total_jual
+        SELECT jns2 AS jns, SUM(jmlh) AS total_jual
         FROM transaksi_jual
         WHERE flag = 'JAY' 
         AND (@jns IS NULL OR @jns = '' OR jns2 = @jns)
@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
     const pembelianayam = await pool.request()
       .input('tgl', sql.DateTime, tgl)
       .query(`
-        SELECT jenisayam.jenis as jns, SUM(jmlh) AS total_beli
+        SELECT jenisayam.jenis AS jns, SUM(jmlh) AS total_beli
         FROM transaksi,jenisayam
         WHERE transaksi.jns = jenisayam.kode and flag = 'PAY'  
         AND tgl <= @tgl
