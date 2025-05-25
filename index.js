@@ -36,9 +36,8 @@ const app = express();
 const allowedOrigins = [
   "https://ayam-api.up.railway.app",
   "https://ayam-api-nine.vercel.app",
-  "https://app.rishackmoto.com",
-  "https://ayam-8tgwwnn2i-rishackmotos-projects.vercel.app"
-];
+  "https://app.rishackmoto.com"
+  ];
 
 app.use(cors({
   origin: function (origin, callback) {
