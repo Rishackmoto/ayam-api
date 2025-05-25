@@ -36,7 +36,8 @@ app.use(cors({
   origin: [
     "https://ayam-api.up.railway.app",
     "https://api.rishackmoto.com",
-    // "https://ayam-api-nine.vercel.app"
+    "https://app.rishackmoto.com",
+    "https://ayam-api-nine.vercel.app"
   ],
   credentials: true
 }));
@@ -46,7 +47,7 @@ app.use(express.json());
 app.use((req, res, next) => {
   const host = req.headers.host;
   if (host === 'ayam-api-nine.vercel.app') {
-    return res.redirect(301, `https://api.rishackmoto.com${req.url}`);
+    return res.redirect(301, `https://app.rishackmoto.com${req.url}`);
   }
   next(); // lanjutkan ke route berikutnya
 });
