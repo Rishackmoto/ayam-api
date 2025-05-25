@@ -36,9 +36,7 @@ const app = express();
 const allowedOrigins = [
   "https://ayam-api.up.railway.app",
   "https://ayam-api-nine.vercel.app",
-  "https://app.rishackmoto.com",
-  "https://www.rishackmoto.com",
-  "http://localhost:3000" // untuk lokal dev
+  "https://app.rishackmoto.com"
 ];
 
 app.use(cors({
