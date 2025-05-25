@@ -43,6 +43,17 @@ app.use(cors({
 app.use(express.json());
 
 
+// 🔁 Redirect dari vercel domain ke custom domain
+app.use((req, res, next) => {
+  const host = req.headers.host;
+  if (host === 'ayam-api-nine.vercel.app') {
+    return res.redirect(301, `https://app.rishackmoto.com${req.url}`);
+  }
+  next(); // lanjutkan ke route berikutnya
+});
+
+
+
 app.use('/api', authRoutes);
 app.use('/jenisayam', jenisAyamRoutes);
 app.use('/jeniscities', jenisCitiesRoutes);
