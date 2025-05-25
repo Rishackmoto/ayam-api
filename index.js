@@ -36,21 +36,11 @@ app.use(cors({
   origin: [
     "https://ayam-api.up.railway.app",
     "https://app.rishackmoto.com",
+    "https://ayam-api-nine.vercel.app"
   ],
   credentials: true
 }));
 app.use(express.json());
-
-
-// 🔁 Redirect dari vercel domain ke custom domain
-// app.use((req, res, next) => {
-//   const host = req.headers.host;
-//   if (host === 'ayam-api-nine.vercel.app') {
-//     return res.redirect(301, `https://app.rishackmoto.com${req.url}`);
-//   }
-//   next(); // lanjutkan ke route berikutnya
-// });
-
 
 
 app.use('/api', authRoutes);
