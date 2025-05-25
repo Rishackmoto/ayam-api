@@ -1,3 +1,6 @@
+require("dotenv").config({ path: 'D://flutter/2025/ayam/ayam-api/.env' });
+console.log("🔍 DB_SERVER dari .env:", process.env.DB_SERVER);
+
 const sql = require("mssql");
 require("dotenv").config();
 
