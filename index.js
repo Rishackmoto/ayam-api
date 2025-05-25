@@ -37,6 +37,7 @@ app.use(cors({
     "https://ayam-api.up.railway.app",
     "https://api.rishackmoto.com",
     "https://app.rishackmoto.com",
+    "https://app.sit-loor.com",
     "https://ayam-api-nine.vercel.app"
   ],
   credentials: true
