@@ -35,7 +35,7 @@ const app = express();
 // ✅ Setup CORS yang benar
 const allowedOrigins = [
   "https://ayam-api.up.railway.app",
-  "https://ayam-api-nine.vercel.app",
+  // "https://ayam-api-nine.vercel.app",
   "https://app.rishackmoto.com",
   "http://localhost:3000",
   "http://localhost:1234", // misal pakai Parcel
