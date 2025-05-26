@@ -36,13 +36,12 @@ const app = express();
 const allowedOrigins = [
   "https://ayam-api.up.railway.app",
   "https://ayam-api-nine.vercel.app",
-  "https://sit-loor.vercel.app",
   "https://app.rishackmoto.com",
   "http://localhost:3000",
   "http://localhost:1234", // misal pakai Parcel
   "http://localhost:5173", // misal pakai Vite
   "http://localhost:4200", // misal pakai Angular
-  "http://localhost:3000" 
+  "http://localhost:8080" 
   ];
 
 app.use(cors({
