@@ -41,7 +41,7 @@ const allowedOrigins = [
   "http://localhost:1234", // misal pakai Parcel
   "http://localhost:5173", // misal pakai Vite
   "http://localhost:4200", // misal pakai Angular
-  "http://localhost:8080" 
+  "http://localhost:8080s" 
   ];
 
 app.use(cors({
