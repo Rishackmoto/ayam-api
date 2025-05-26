@@ -35,7 +35,8 @@ const app = express();
 // ✅ Setup CORS yang benar
 const allowedOrigins = [
   "https://ayam-api.up.railway.app",
-   "https://ayam-api-nine.vercel.app",
+  "https://ayam-api-nine.vercel.app",
+  "https://sit-loor.vercel.app",
   "https://app.rishackmoto.com",
   "http://localhost:3000",
   "http://localhost:1234", // misal pakai Parcel
@@ -61,7 +62,7 @@ app.use(express.json());
 app.use((req, res, next) => {
   const host = req.headers.host;
   if (host === 'ayam-api-nine.vercel.app') {
-    return res.redirect(301, `https://app.rishackmoto.com${req.url}`);
+    return res.redirect(301, `https://sit-loor.vercel.app${req.url}`);
   }
   next();
 });
