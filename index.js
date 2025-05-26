@@ -62,7 +62,7 @@ app.use(express.json());
 app.use((req, res, next) => {
   const host = req.headers.host;
   if (host === 'ayam-api-nine.vercel.app') {
-    return res.redirect(301, `https://sit-loor.vercel.app${req.url}`);
+    return res.redirect(301, `https://sit-loor.app${req.url}`);
   }
   next();
 });
